@@ -1,5 +1,5 @@
 import { SHARE_MOVIE_CONNECTION } from '@/common/constants';
-import { User } from '@/mariadb/entities/user.entity';
+import { User } from '@/db/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
