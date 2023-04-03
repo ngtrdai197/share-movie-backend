@@ -21,6 +21,9 @@ jobs:
         run: npm run test
 
   build-and-push:
+    needs: test-api
+    if: ${{ success() }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
