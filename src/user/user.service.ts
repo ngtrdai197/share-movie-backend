@@ -25,14 +25,11 @@ export class UserService {
   }
 
   public async getProfile(userId: number): Promise<User> {
-    const result = await this.usersRepository.findOne({
+    return this.usersRepository.findOne({
       where: {
         id: userId,
       },
       select: ['id', 'email', 'createdDate', 'updatedDate'],
     });
-    result.validatePassword('123123');
-    console.log('result :>> ', JSON.stringify(result));
-    return result;
   }
 }
