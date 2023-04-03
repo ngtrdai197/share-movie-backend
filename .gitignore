@@ -4,6 +4,7 @@
 
 # database
 /database
+/.db_prod
 
 # Logs
 logs
