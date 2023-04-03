@@ -1,4 +1,4 @@
-import { User } from '@/mariadb/entities/user.entity';
+import { User } from '@/db/entities/user.entity';
 import { HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
