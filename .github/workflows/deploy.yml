@@ -23,15 +23,16 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./api
+          context: .
           push: true
-          tags: ngtrdai197/${{ env.IMAGE_NAME }}:latest
+          tags: ngtrdai197/${{ env.IMAGE_NAME }}:latest,ngtrdai197/${{env.IMAGE_NAME}}:${{ github.sha }}
     env:
       IMAGE_NAME: share-movie-backend
 
   deploy-api:
     name: Deploy to EC2
     runs-on: ubuntu-latest
+    needs: build-and-push
     steps:
       - uses: actions/checkout@v2
       - name: Build & Deploy
