@@ -18,8 +18,9 @@ done
 # If not all containers are running, start them with docker-compose
 if ! $all_running; then
     if [ -e "$compose_file" ]; then
-        echo "Starting containers using docker-compose..."
-        docker-compose -f "$compose_file" up -d ${container_names[@]}
+        echo "All containers have been started"
+        docker-compose up --build
+        exit
     else
         echo "Compose file not found at $compose_file."
     fi
