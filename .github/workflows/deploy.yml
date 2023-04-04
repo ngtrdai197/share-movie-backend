@@ -57,8 +57,9 @@ jobs:
         with:
           instance_name: '${{ secrets.INSTANCE_NAME }}'
           zone: '${{ secrets.INSTANCE_ZONE }}'
-          ssh_private_key: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
+          ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
           command: 'echo Hello world'
+
       #   uses: appleboy/ssh-action@master
       #   with:
       #     host: ${{ secrets.SSH_HOST }}
