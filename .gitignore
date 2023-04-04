@@ -5,6 +5,7 @@
 # database
 /database
 /.db_prod
+.env
 
 # Logs
 logs

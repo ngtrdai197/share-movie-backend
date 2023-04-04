@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  share-movie-api:
+    container_name: public-api
+    image: shared-movie
+    env_file:
+      - .env
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/app
+    restart: always
+    depends_on:
+      - share-movie-db
+
+  share-movie-db:
+    container_name: mariadb-db
+    image: "mariadb:latest"
+    env_file:
+      - .env
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}
+    expose:
+      - ${MARIADB_PORT}
+    restart: unless-stopped
+    volumes:
+      - ./database/conf.d:/etc/mysql/conf.d
+      - ./database/logs:/logs
+      - ./database:/var/lib/mysql
+
+volumes:
+  database:

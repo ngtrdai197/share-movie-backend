@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  share-movie-backend:
+    container_name: share-movie-backend
+    image: ghcr.io/ngtrdai197/share-movie-backend:latest
+    environment:
+      - GITHUB_TOKEN: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
+    env_file:
+      - .env
+    ports:
+      - ${PUBLIC_API_PORT}:${PUBLIC_API_PORT}
+    restart: always
+    depends_on:
+      - share-movie-db
+
+  share-movie-db:
+    container_name: share-movie-db
+    image: "mariadb:latest"
+    env_file:
+      - .env
+    ports:
+      - ${MARIADB_PORT}:${MARIADB_PORT}
+    restart: unless-stopped
+    volumes:
+      - ./.db_prod/conf.d:/etc/mysql/conf.d
+      - ./.db_prod/logs:/logs
+      - ./.db_prod:/var/lib/mysql
+
+volumes:
+  .db_prod:
