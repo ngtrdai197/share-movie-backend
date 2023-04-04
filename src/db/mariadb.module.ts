@@ -6,17 +6,17 @@ import { Movie } from './entities/movie.entity';
 import { User } from './entities/user.entity';
 
 @Module({})
-export class MariadbModule {
+export class DatabaseModule {
   static forRoot(): DynamicModule {
     return {
-      module: MariadbModule,
+      module: DatabaseModule,
       global: true,
       imports: [
         TypeOrmModule.forRootAsync({
           name: SHARE_MOVIE_CONNECTION,
           useFactory: async (envService: EnvironmentService) => {
             return {
-              type: 'mariadb',
+              type: 'mysql',
               entities: [User, Movie],
               replication: {
                 master: envService.master,
