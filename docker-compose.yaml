@@ -3,7 +3,7 @@ version: '3.7'
 services:
   share-movie-backend:
     container_name: share-movie-backend
-    image: gcr.io/sound-catalyst-382708/share-movie-backend:latest
+    image: ngtrdai197/share-movie-backend:latest
     env_file:
       - .env
     ports:
