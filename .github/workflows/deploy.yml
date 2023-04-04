@@ -29,16 +29,49 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Login to GitHub Container Registry
-        run: echo ${{ env.CR_PAT }} | docker login ghcr.io -u ${{env.GITHUB_USER}} --password-stdin
-
-      - name: Build Docker Image
-        uses: docker/build-push-action@v2
+      - name: Building and pushing the image
+        uses: RafikFarhad/push-to-gcr-github-action@v5-beta # <- use this on your workflow
         with:
-          context: .
-          push: true
-          tags: ghcr.io/${{env.GITHUB_USER}}/${{env.IMAGE_NAME}}:latest,ghcr.io/${{env.GITHUB_USER}}/${{env.IMAGE_NAME}}:${{ github.sha }}
+          gcloud_service_key: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
+          registry: gcr.io
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          image_name: ${{ env.IMAGE_NAME }}
+          image_tag: latest, ${{ github.sha }}
+          dockerfile: ./Dockerfile
+          context: ./
+          target: build
+
     env:
       IMAGE_NAME: share-movie-backend
-      GITHUB_USER: ngtrdai197
-      CR_PAT: ${{ secrets.CR_PAT }}
+      # GITHUB_USER: ngtrdai197
+      # CR_PAT: ${{ secrets.CR_PAT }}
+
+  deploy-api:
+    runs-on: ubuntu-latest
+    needs: build-and-push
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: 'Authenticate GCP'
+        uses: 'google-github-actions/auth@v0'
+        with:
+          credentials_json: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
+
+      # - name: Executing remote ssh commands using ssh key
+      #   uses: 'google-github-actions/ssh-compute@v0'
+      #   with:
+      #     instance_name: '${{ secrets.INSTANCE_NAME }}'
+      #     zone: '${{ secrets.INSTANCE_ZONE }}'
+      #     ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+      #     command: 'echo Hello world'
+
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: '22'
+          username: ${{ secrets.SSH_USER_NAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: sh ./serve.sh
+      - name: 'Echo when access GCP'
+        run: echo "Access GCP Successfully"
