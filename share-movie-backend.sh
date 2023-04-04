@@ -19,8 +19,8 @@ done
 if ! $all_running; then
     if [ -e "$compose_file" ]; then
         echo "All containers have been started"
-        docker-compose up --build
-        exit
+        docker-compose up --build -d
+        exit 0
     else
         echo "Compose file not found at $compose_file."
     fi
@@ -31,3 +31,5 @@ else
     docker-compose pull share-movie-backend
     docker-compose up -d share-movie-backend
 fi
+
+echo "Done"
