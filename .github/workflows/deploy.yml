@@ -39,13 +39,12 @@ jobs:
       #     push: true
       #     tags: ghcr.io/${{env.GITHUB_USER}}/${{env.IMAGE_NAME}}:latest,ghcr.io/${{env.GITHUB_USER}}/${{env.IMAGE_NAME}}:${{ github.sha }}
       - name: Building and pushing the image
-        uses: ./
-        # uses: RafikFarhad/push-to-gcr-github-action@v5-beta # <- use this on your workflow
+        uses: RafikFarhad/push-to-gcr-github-action@v5-beta # <- use this on your workflow
         with:
           gcloud_service_key: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
           registry: gcr.io
-          project_id: ${{secrets.GCP_PROJECT_ID}}
-          image_name: ${{env.IMAGE_NAME}}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          image_name: ${{ env.IMAGE_NAME }}
           image_tag: latest, ${{ github.sha }}
           dockerfile: ./Dockerfile
           context: ./
