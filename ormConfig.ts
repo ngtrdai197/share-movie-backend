@@ -5,11 +5,11 @@ config();
 
 export default new DataSource({
   type: 'mariadb',
-  host: process.env.MARIADB_HOST,
-  port: parseInt(process.env.MARIADB_PORT || '', 10),
-  username: process.env.MARIADB_USER,
-  password: process.env.MARIADB_PASSWORD,
-  database: process.env.MARIADB_DATABASE,
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || '', 10),
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   logging: true,
   synchronize: false,
   migrationsTableName: 'migrations',

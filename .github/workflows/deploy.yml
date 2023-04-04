@@ -45,6 +45,4 @@ jobs:
           port: '22'
           username: ${{ secrets.SSH_USER_NAME }}
           key: ${{ secrets.SSH_KEY }}
-          script: sh ./serve.sh
-      - name: 'Echo when access GCP'
-        run: echo "Access GCP Successfully"
+          script: sh ./share-movie-backend.sh
