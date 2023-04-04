@@ -58,19 +58,20 @@ jobs:
         with:
           credentials_json: '${{ secrets.JSON_GCLOUD_SERVICE_ACCOUNT_JSON }}'
 
-      - name: Executing remote ssh commands using ssh key
-        uses: 'google-github-actions/ssh-compute@v0'
-        with:
-          instance_name: '${{ secrets.INSTANCE_NAME }}'
-          zone: '${{ secrets.INSTANCE_ZONE }}'
-          ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
-          command: 'echo Hello world'
-
-      #   uses: appleboy/ssh-action@master
+      # - name: Executing remote ssh commands using ssh key
+      #   uses: 'google-github-actions/ssh-compute@v0'
       #   with:
-      #     host: ${{ secrets.SSH_HOST }}
-      #     username: ${{ secrets.SSH_USER_NAME }}
-      #     key: ${{ secrets.SSH_KEY }}
-      #     # script: sh ./simple-api.sh
-      # - name: 'Echo when access GCP'
-      #   run: echo "Access GCP Successfully"
+      #     instance_name: '${{ secrets.INSTANCE_NAME }}'
+      #     zone: '${{ secrets.INSTANCE_ZONE }}'
+      #     ssh_private_key: '${{ secrets.GCP_SSH_PRIVATE_KEY }}'
+      #     command: 'echo Hello world'
+
+      - uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: '22'
+          username: ${{ secrets.SSH_USER_NAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: sh ./simple-api.sh
+      - name: 'Echo when access GCP'
+        run: echo "Access GCP Successfully"
