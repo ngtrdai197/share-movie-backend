@@ -3,9 +3,12 @@ version: '3.7'
 services:
   share-movie-backend:
     container_name: share-movie-backend
-    image: ghcr.io/ngtrdai197/share-movie-backend:latest
-    environment:
-      - GITHUB_TOKEN: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
+    image: share-movie-backend
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/app
     env_file:
       - .env
     ports:
