@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { AuthGuard } from './common/guards/auth.guard';
+import { AccessLogInterceptor } from './common/interceptors/access-log.interceptor';
 import { DatabaseModule } from './db/mariadb.module';
 import { EnvironmentModule } from './environment/environment.module';
 import { MovieModule } from './movie/movie.module';
@@ -19,6 +20,10 @@ import { UserModule } from './user/user.module';
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AccessLogInterceptor,
     },
   ],
 })

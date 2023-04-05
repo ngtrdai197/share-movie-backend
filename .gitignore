@@ -3,7 +3,7 @@
 /node_modules
 
 # database
-/database
+/.db_data
 /.db_prod
 .env
 
