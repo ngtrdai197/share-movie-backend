@@ -18,19 +18,18 @@ services:
       - share-movie-db
 
   share-movie-db:
-    container_name: mariadb-db
-    image: "mariadb:latest"
-    env_file:
-      - .env
+    container_name: share-movie-db
+    image: "mysql:latest"
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: movie_password
+      MYSQL_DATABASE: share_movies
     ports:
-      - ${MARIADB_PORT}:${MARIADB_PORT}
-    expose:
-      - ${MARIADB_PORT}
-    restart: unless-stopped
+      - 3306:3306
     volumes:
-      - ./database/conf.d:/etc/mysql/conf.d
-      - ./database/logs:/logs
-      - ./database:/var/lib/mysql
-
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./.db_data:/var/lib/mysql
 volumes:
-  database:
+  .db_data:
+
+
